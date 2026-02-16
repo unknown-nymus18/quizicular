@@ -1,11 +1,12 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.db import transaction
-from .models import Quiz, Question, Choice, QuizAttempt
-from rest_framework.decorators import api_view
+from .models import QuizAttempt
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework import status
-from .serializers import QuizSerializer
+from .serializers import QuizAttemptCreateSerializer, QuizAttemptSerializer
 import requests
 import json
 import os
@@ -173,8 +174,8 @@ IMPORTANT: Return exactly {questions_number} questions. Count them before respon
         quiz_data = []
 
     # Query existing quizzes as fallback or reference
-    quizzes = Quiz.objects.filter(title__icontains=topic)
-    serializer = QuizSerializer(quizzes, many=True)
+    # quizzes = Quiz.objects.filter(title__icontains=topic)
+    # serializer = QuizSerializer(quizzes, many=True)
     
     print(f"Final quiz_data being returned: {len(quiz_data) if quiz_data else 0} questions")  # Debug
     
@@ -183,12 +184,68 @@ IMPORTANT: Return exactly {questions_number} questions. Count them before respon
         "topic": topic,
         "difficulty": difficulty,
         "ai_generated_quiz": quiz_data,
-        "existing_quizzes": serializer.data,
-        "debug_info": {
-            "ai_questions_count": len(quiz_data) if quiz_data else 0,
-            "existing_quizzes_count": len(serializer.data)
-        }
+        # "existing_quizzes": serializer.data,
+        # "debug_info": {
+        #     "ai_questions_count": len(quiz_data) if quiz_data else 0,
+        #     "existing_quizzes_count": len(serializer.data)
+        # }
     })
+
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def store_quiz_attempt(request):
+    """
+    Store a completed quiz attempt
+    Expected JSON format:
+    {
+        "topic": "The digestive system",
+        "difficulty": "medium", 
+        "ai_generated_quiz": [
+            {
+                "question": "Which organ...",
+                "choices": ["A", "B", "C", "D"],
+                "answer_index": 1,
+                "chosen_answer": 2
+            }
+        ],
+        "time_taken": "00:05:30" (optional)
+    }
+    """
+    serializer = QuizAttemptCreateSerializer(data=request.data, context={'request': request})
+    
+    if serializer.is_valid():
+        quiz_attempt = serializer.save()
+        
+        # Return the created attempt data
+        response_serializer = QuizAttemptSerializer(quiz_attempt)
+        return Response({
+            'message': 'Quiz attempt stored successfully',
+            'quiz_attempt': response_serializer.data
+        }, status=status.HTTP_201_CREATED)
+    
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def get_user_quiz_attempts(request):
+    """Get all quiz attempts for the current user"""
+    attempts = QuizAttempt.objects.filter(user=request.user)
+    serializer = QuizAttemptSerializer(attempts, many=True)
+    return Response(serializer.data)
+
+
+@api_view(['GET'])  
+@permission_classes([IsAuthenticated])
+def get_quiz_attempt_detail(request, attempt_id):
+    """Get details of a specific quiz attempt"""
+    try:
+        attempt = QuizAttempt.objects.get(id=attempt_id, user=request.user)
+        serializer = QuizAttemptSerializer(attempt)
+        return Response(serializer.data)
+    except QuizAttempt.DoesNotExist:
+        return Response({'error': 'Quiz attempt not found'}, status=status.HTTP_404_NOT_FOUND)
 
 
 
