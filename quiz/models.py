@@ -21,14 +21,14 @@ from django.contrib.auth.models import User
 
 class QuizAttempt(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='quiz_attempts')
-    topic = models.CharField(max_length=200)  # \"The digestive system\"
-    difficulty = models.CharField(max_length=50)  # \"medium\"
+    topic = models.CharField(max_length=200)  
+    difficulty = models.CharField(max_length=50)  
     total_questions = models.IntegerField()
     correct_answers = models.IntegerField()
     score_percentage = models.FloatField()
     
     # Store the complete quiz data as JSON
-    quiz_data = models.JSONField()  # The entire ai_generated_quiz array
+    quiz_data = models.JSONField()
     
     completed_at = models.DateTimeField(auto_now_add=True)
     time_taken = models.DurationField(null=True, blank=True)

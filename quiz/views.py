@@ -195,23 +195,6 @@ IMPORTANT: Return exactly {questions_number} questions. Count them before respon
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def store_quiz_attempt(request):
-    """
-    Store a completed quiz attempt
-    Expected JSON format:
-    {
-        "topic": "The digestive system",
-        "difficulty": "medium", 
-        "ai_generated_quiz": [
-            {
-                "question": "Which organ...",
-                "choices": ["A", "B", "C", "D"],
-                "answer_index": 1,
-                "chosen_answer": 2
-            }
-        ],
-        "time_taken": "00:05:30" (optional)
-    }
-    """
     serializer = QuizAttemptCreateSerializer(data=request.data, context={'request': request})
     
     if serializer.is_valid():
