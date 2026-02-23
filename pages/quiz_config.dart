@@ -179,9 +179,7 @@ class _QuizConfigState extends State<QuizConfig> {
                   child: ElevatedButton(
                     onPressed: () {
                       // Handle quiz generation
-                      if (topic.text.isNotEmpty ||
-                          questionsNumber.isNaN ||
-                          difficulty.isNotEmpty) {
+                      if (topic.text.isNotEmpty) {
                         Navigator.push(
                           context,
                           MaterialPageRoute(

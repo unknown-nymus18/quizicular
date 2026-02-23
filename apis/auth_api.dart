@@ -17,6 +17,7 @@ class AuthApi {
   static const String logoutUrl = '$baseUrl/api/account/logout/';
   static const String isAuthenticatedUrl =
       '$baseUrl/api/account/is_authenticated/';
+  static const getLeaderboardUrl = '$baseUrl/api/account/leaderboard/';
 
   // Initialize Dio with persistent cookie management
   static Future<void> _initializeDio() async {
@@ -105,5 +106,11 @@ class AuthApi {
   static Future<void> clearCredentials() async {
     await _initializeDio();
     await _cookieJar.deleteAll();
+  }
+
+  static Future<Response> getLeaderboard() async {
+    await _initializeDio();
+    final response = await _dio.get(getLeaderboardUrl);
+    return response;
   }
 }
