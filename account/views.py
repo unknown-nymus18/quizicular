@@ -169,21 +169,26 @@ def get_user_with_profile(request):
 @api_view(["GET"])
 def get_leaderboard(request):
     """Get top users by total_score for leaderboard"""
-    top_profiles = UserProfile.objects.select_related('user').order_by('-total_score')[:10]
-    leaderboard = []
-    for profile in top_profiles:
-        leaderboard.append({
-            "username": profile.user.username,
-            "total_score": profile.total_score,
-            "streak": profile.streak,
-            "quizzes_completed": profile.quizzes_completed,
-            'first_name':profile.user.first_name,
-            'last_name':profile.user.last_name,
-        })
-    
-    return Response({
-        "leaderboard": leaderboard
-    }, status=status.HTTP_200_OK)
+    try:
+        top_profiles = UserProfile.objects.select_related('user').order_by('-total_score')[:10]
+        leaderboard = []
+        for profile in top_profiles:
+            leaderboard.append({
+                "username": profile.user.username,
+                "total_score": profile.total_score,
+                "streak": profile.streak,
+                "quizzes_completed": profile.quizzes_completed,
+                'first_name':profile.user.first_name,
+                'last_name':profile.user.last_name,
+            })
+        
+        return Response({
+            "leaderboard": leaderboard
+        }, status=status.HTTP_200_OK)
+    except Exception as e:
+        return Response({
+            "error": str(e)
+        }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
 # @csrf_exempt
