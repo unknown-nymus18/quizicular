@@ -10,6 +10,7 @@ from django.utils.decorators import method_decorator
 from .serializers import UserSerializer, UserProfileSerializer, UserWithProfileSerializer
 from django.contrib.auth.models import User
 from .models import UserProfile
+# from quiz import QuizAttempt
 
 
 @csrf_exempt
@@ -175,9 +176,17 @@ def get_leaderboard(request):
             "username": profile.user.username,
             "total_score": profile.total_score,
             "streak": profile.streak,
-            "quizzes_completed": profile.quizzes_completed
+            "quizzes_completed": profile.quizzes_completed,
+            'first_name':profile.user.first_name,
+            'last_name':profile.user.last_name,
         })
     
     return Response({
         "leaderboard": leaderboard
     }, status=status.HTTP_200_OK)
+
+
+# @csrf_exempt
+# @api_view(["GET"])
+# def get_user_quizzes(request):
+#     user_quezzes = QuizAttempt.objec

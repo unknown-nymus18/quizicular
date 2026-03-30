@@ -164,6 +164,23 @@ CORS_ALLOW_ALL_ORIGINS = True
 # Allow credentials to be included in CORS requests
 CORS_ALLOW_CREDENTIALS = True
 
+# Session Configuration
+SESSION_ENGINE = 'django.contrib.sessions.backends.db'
+SESSION_COOKIE_AGE = 1209600  # 2 weeks
+SESSION_COOKIE_SECURE = False  # Set to True in production with HTTPS
+SESSION_COOKIE_HTTPONLY = True
+SESSION_COOKIE_SAMESITE = 'Lax'
+SESSION_SAVE_EVERY_REQUEST = True
+SESSION_COOKIE_DOMAIN = None  # Leave as None for localhost
+
+# CORS Configuration
+CORS_ALLOW_CREDENTIALS = True
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",
+    "http://127.0.0.1:3000",
+]
+CORS_ALLOW_ALL_ORIGINS = True  # Set to True for development, False for production
+
 # Allow specific headers
 CORS_ALLOW_HEADERS = [
     'accept',
@@ -176,6 +193,15 @@ CORS_ALLOW_HEADERS = [
     'x-csrftoken',
     'x-requested-with',
 ]
+
+# Session Configuration for Cross-Origin Requests
+SESSION_COOKIE_SAMESITE = None
+SESSION_COOKIE_SECURE = False  # Set to True in production with HTTPS
+SESSION_COOKIE_HTTPONLY = False  # Allow JavaScript access for debugging
+SESSION_SAVE_EVERY_REQUEST = True
+SESSION_COOKIE_AGE = 86400  # 24 hours
+SESSION_COOKIE_DOMAIN = None  # Allow cookies on localhost
+SESSION_EXPIRE_AT_BROWSER_CLOSE = False
 
 # REST Framework Configuration
 REST_FRAMEWORK = {
