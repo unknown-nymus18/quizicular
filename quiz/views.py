@@ -234,7 +234,7 @@ def get_quiz_attempt_detail(request, attempt_id):
 
 
 @api_view(["POST"])
-def update_Points(request):
+def update_points(request):
     if not request.user.is_authenticated:
         return Response({
             'error':"Authentication required"
