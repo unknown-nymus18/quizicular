@@ -248,6 +248,7 @@ def update_points(request):
         
         user = request.user
         user.userprofile.total_score += points
+        user.userprofile.quizzes_completed +=1
         user.userprofile.save()
         return Response({
             'message':"Points updated successfully"
