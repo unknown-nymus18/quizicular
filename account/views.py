@@ -191,7 +191,3 @@ def get_leaderboard(request):
         }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
-# @csrf_exempt
-# @api_view(["GET"])
-# def get_user_quizzes(request):
-#     user_quezzes = QuizAttempt.objec

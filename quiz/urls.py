@@ -6,4 +6,5 @@ urlpatterns = [
     path('attempts/', store_quiz_attempt, name='store_quiz_attempt'),
     path('attempts/list/', get_user_quiz_attempts, name='get_user_quiz_attempts'),
     path('attempts/<int:attempt_id>/', get_quiz_attempt_detail, name='get_quiz_attempt_detail'),
+    path('update-points/', update_Points, name='update_points'),
 ]

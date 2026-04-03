@@ -232,3 +232,27 @@ def get_quiz_attempt_detail(request, attempt_id):
 
 
 
+
+@api_view(["POST"])
+def update_Points(request):
+    if not request.user.is_authenticated:
+        return Response({
+            'error':"Authentication required"
+        }, status=status.HTTP_401_UNAUTHORIZED)
+    try:
+        points = request.data.get("points")
+        if not points:
+            return Response({
+                'message':"Points are required"
+            }, status=status.HTTP_400_BAD_REQUEST)
+        
+        user = request.user
+        user.userprofile.total_score += points
+        user.userprofile.save()
+        return Response({
+            'message':"Points updated successfully"
+        }, status=status.HTTP_200_OK)
+    except Exception as e:
+        return Response({
+            'error': str(e)
+        }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
