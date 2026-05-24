@@ -1,0 +1,15 @@
+# Netlify Configuration File
+
+# Redirects and Rewrites
+# 1. Proxy API requests to the Render backend to avoid third-party cookie / CORS issues.
+[[redirects]]
+  from = "/api/*"
+  to = "https://quizicular.onrender.com/api/:splat"
+  status = 200
+  force = true
+
+# 2. Redirect all other requests to index.html for React Router single-page application routing.
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200

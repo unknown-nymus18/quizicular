@@ -1,8 +1,5 @@
 class QuizApi {
-  static baseUrl =
-    (import.meta.env.VITE_API_BASE_URL ||
-      (import.meta.env.DEV ? "" : "https://quizicular.onrender.com")) +
-    "/api/quiz/";
+  static baseUrl = (import.meta.env.VITE_API_BASE_URL || "") + "/api/quiz/";
 
   static getQuiz(topic: String, difficulty: String, questions_number: number) {
     return fetch(`${this.baseUrl}`, {

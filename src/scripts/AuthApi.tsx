@@ -1,5 +1,5 @@
 class AuthApi {
-  static baseUrl = (import.meta.env.VITE_API_BASE_URL || (import.meta.env.DEV ? "" : "https://quizicular.onrender.com")) + "/api/account";
+  static baseUrl = (import.meta.env.VITE_API_BASE_URL || "") + "/api/account";
 
   static checkAuth() {
     return fetch(`${this.baseUrl}/is_authenticated/`, {
