@@ -1,0 +1,114 @@
+.loading-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.lottie-container{
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  align-items: center;
+}
+
+
+
+.quiz-completed {
+  position: absolute;
+  width: 100%;
+  max-width: 560px;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  /* background: linear-gradient(180deg, #ffffff 0%, #f6f8ff 100%); */
+  /* border-radius: 24px; */
+  /* padding: 36px 32px 30px; */
+  /* box-shadow: 0 10px 30px rgba(15, 23, 42, 0.12),
+    0 30px 60px rgba(15, 23, 42, 0.08);
+  border: 1px solid rgba(15, 23, 42, 0.08); */
+  /* margin: 20px; */
+  text-align: center;
+  animation: quizCompletedIn 0.6s ease;
+  overflow: hidden;
+}
+
+.quiz-completed button{
+  padding: 10px 30px;
+  border-radius: 12px ;
+  color: white;
+  background-color: black;
+}
+
+.quiz-completed::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  /* background: radial-gradient(
+    600px 200px at 50% -40px,
+    rgba(99, 102, 241, 0.18),
+    transparent 65%
+  ); */
+  pointer-events: none;
+}
+
+.quiz-completed-hero {
+  width: min(280px, 70vw);
+  margin: 0 auto 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.quiz-completed-hero > div,
+.quiz-completed-hero svg,
+.quiz-completed-hero canvas {
+  width: 100% !important;
+  height: auto !important;
+}
+
+.quiz-completed-title {
+  margin: 10px 0 6px;
+  font-size: 30px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: #111827;
+}
+
+.quiz-completed-score {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin: 12px 0 10px;
+  /* padding: 10px 18px;
+  border-radius: 999px; */
+  /* background: #111827; */
+  color: #111827;
+  font-weight: 600;
+  font-size: 24px;
+  /* box-shadow: 0 8px 20px rgba(17, 24, 39, 0.25); */
+}
+
+.quiz-completed-caption {
+  margin: 20px;
+  color: #475569;
+  font-size: 14px;
+}
+
+@keyframes quizCompletedIn {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -46%) scale(0.96);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}

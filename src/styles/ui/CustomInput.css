@@ -1,0 +1,56 @@
+.custom-input {
+    margin-bottom: 10px;
+    width: 100%;
+    border: 2px solid #e2e8f0;
+    border-radius: 6px;
+    font-size: 16px;
+    background-color: #fafafc;
+    position: relative;
+    height: 35px;
+    padding: 0 12px;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+.custom-input::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    border-radius: 8px;
+    background: linear-gradient(45deg, #ff0080, #7928ca, #0070f3, #00dfd8, #ff0080);
+    background-size: 400% 400%;
+    z-index: -1;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    animation: gradientMove 3s ease infinite;
+}
+
+.custom-input:focus {
+    border: 2px solid transparent;
+    background-color: #ffffff;
+    box-shadow: 0 0 20px rgba(121, 40, 202, 0.3);
+}
+
+.custom-input:focus::before {
+    opacity: 1;
+}
+
+.custom-input::placeholder {
+    color: #718096;
+    font-size: 14px;
+}
+
+@keyframes gradientMove {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
