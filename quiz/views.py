@@ -232,7 +232,7 @@ def get_quiz_attempt_detail(request, attempt_id):
 
 
 
-
+# @csrf_exempt
 @api_view(["POST"])
 def update_points(request):
     if not request.user.is_authenticated:
@@ -248,7 +248,6 @@ def update_points(request):
         
         user = request.user
         user.userprofile.total_score += points
-        user.userprofile.quizzes_completed +=1
         user.userprofile.save()
         return Response({
             'message':"Points updated successfully"

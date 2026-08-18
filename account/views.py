@@ -92,7 +92,7 @@ def get_user_info(request):
             
             if hours_since_last >= 48:
                 # Reset streak if more than 48 hours
-                profile.streak = 1
+                profile.streak = 0
             elif 24 <= hours_since_last < 48:
                 # Continue streak if between 24-48 hours (next day login)
                 profile.streak += 1
