@@ -8,7 +8,7 @@ function Footer() {
     <footer>
       <div className="footer-section">
         <div className="socials-section">
-          <p>DCIT 317(GROUP 13)</p>
+          <p>Felix Yamoah Asante</p>
           <div className="socials">
             <a>
               <img src={linkedInImg} />
